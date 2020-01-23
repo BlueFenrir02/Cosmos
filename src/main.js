@@ -1,9 +1,9 @@
 // Setup
-const Discord = require('discord.js');
+global.Discord = require('discord.js');
+global.client = new Discord.Client();
 const { prefix, token } = require('./config.json');
 const fs = require('fs');
 
-const client = new Discord.Client();
 
 // Load commands
 client.commands = new Discord.Collection();
