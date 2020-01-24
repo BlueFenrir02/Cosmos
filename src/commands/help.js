@@ -1,13 +1,13 @@
 module.exports = {
 	name: 'help',
-    description: 'Uhh..',
+    description: 'Shows a list of commands if no arguments are given, or helps you with a specific command!',
     args: false,
-    usage: '<commandName>',
+    usage: '<commandName> or <empty>',
 	execute(message, args) {
         if(args.length == 0) {
             let commandList = "**All commands:** \n";
             client.commands.tap(e => commandList += "*" + e.name + "*\n");
-            message.channel.send(commandList);
+            return message.channel.send(commandList);
         } else {
             const commandObject = client.commands.get(args[0].toLowerCase());
             if(commandObject === undefined) return message.reply("Command not found!");
@@ -16,7 +16,7 @@ module.exports = {
                 .setTitle(commandObject.name)
                 .addField('Description', commandObject.description)
                 .addField('Format', message.content[0] + commandObject.name + " " + commandObject.usage);
-            embeds.push(embed);
+            return message.channel.send(embed);
         }
 	}
 };

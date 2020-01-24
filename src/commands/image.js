@@ -1,4 +1,3 @@
-const request = require('request');
 module.exports = {
 	name: 'image',
     description: 'Search for a image!',
@@ -14,7 +13,7 @@ module.exports = {
                 if(body.hits.length === 0) {
                     return message.reply("No images found!");
                 } else {
-                    const image = body.hits[Math.floor(Math.random() * (body.hits.length))].largeImageURL;
+                    const image = body.hits[Math.floor(Math.random() * body.hits.length)].largeImageURL;
                     return message.channel.send(
                         "Out of " + body.total + " images, this is my favorite:", 
                         {files: [image]}

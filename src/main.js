@@ -1,6 +1,7 @@
 // Setup
 const { prefix, token } = require('./config.json');
 global.Discord = require('discord.js');
+global.request = require('request');
 const fs = require('fs');
 
 global.client = new Discord.Client();
@@ -18,7 +19,7 @@ for(const file of commandFiles) {
 // Check if ready
 client.on('ready', () => {
     console.log("Online!");
-    client.user.setActivity('god');
+    client.user.setActivity('?help help');
 });
 
 

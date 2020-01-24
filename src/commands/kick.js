@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'kick',
-    description: 'Kicks a member.',
+    description: 'Kicks a member!',
     args: true,
     usage: '<user> <reason>',
 	execute(message, args) {

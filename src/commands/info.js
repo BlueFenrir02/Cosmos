@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'info',
-    description: 'Retrieves info about a member.',
+    description: 'Retrieves info about a member!',
     args: true,
     usage: '<user>',
 	execute(message, args) {
