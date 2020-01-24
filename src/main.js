@@ -1,18 +1,19 @@
 // Setup
-global.Discord = require('discord.js');
-global.client = new Discord.Client();
 const { prefix, token } = require('./config.json');
+global.Discord = require('discord.js');
 const fs = require('fs');
+
+global.client = new Discord.Client();
 
 
 // Load commands
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
 for(const file of commandFiles) {
     const command = require('./commands/'+file);
     client.commands.set(command.name, command);
 }
+
 
 // Check if ready
 client.on('ready', () => {
@@ -20,7 +21,8 @@ client.on('ready', () => {
     client.user.setActivity('god');
 });
 
-// Events
+
+// Trigger event
 client.on('message', message => {
     if(!message.content.startsWith(prefix) || message.author.bot) return;
     
@@ -30,7 +32,6 @@ client.on('message', message => {
     if(!client.commands.has(commandName)) return;
 
     const command = client.commands.get(commandName);
-
     if(command.args && !args.length) {
         let reply = "Missing arguments!";
         if(command.usage) {

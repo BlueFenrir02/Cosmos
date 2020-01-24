@@ -1,24 +1,22 @@
 module.exports = {
 	name: 'help',
     description: 'Uhh..',
-    args: true,
-    usage: '<commandName> or <all>',
+    args: false,
+    usage: '<commandName>',
 	execute(message, args) {
-        if(args[0] === "all") {
-            client.commands.tap(commandObject => { sendCommandEmbed(commandObject); });
+        if(args.length == 0) {
+            let commandList = "**All commands:** \n";
+            client.commands.tap(e => commandList += "*" + e.name + "*\n");
+            message.channel.send(commandList);
         } else {
             const commandObject = client.commands.get(args[0].toLowerCase());
             if(commandObject === undefined) return message.reply("Command not found!");
-            sendCommandEmbed(commandObject);
-        }
-
-        function sendCommandEmbed(command) {
             const embed = new Discord.RichEmbed()
                 .setColor('#FFA500')
-                .setTitle(command.name)
-                .addField('Description', command.description)
-                .addField('Format', message.content[0] + command.name + " " + command.usage);
-            message.channel.send(embed);
+                .setTitle(commandObject.name)
+                .addField('Description', commandObject.description)
+                .addField('Format', message.content[0] + commandObject.name + " " + commandObject.usage);
+            embeds.push(embed);
         }
 	}
 };
