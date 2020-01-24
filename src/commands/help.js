@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'help',
     description: 'Shows a list of commands if no arguments are given, or helps you with a specific command!',
-    args: false,
+    args: false, // Needs to be false in order to allow no arguments
     usage: '<commandName> or <empty>',
 	execute(message, args) {
         if(args.length == 0) {

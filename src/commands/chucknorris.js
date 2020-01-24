@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'chucknorris',
-    description: 'Get a random Chuck Norris Joke!',
+    description: 'Get a random *Chuck Norris* joke!',
     args: false,
     usage: '',
 	execute(message, args) {

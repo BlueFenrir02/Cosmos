@@ -4,8 +4,8 @@ global.Discord = require('discord.js');
 global.request = require('request');
 const fs = require('fs');
 
+// Create bot
 global.client = new Discord.Client();
-
 
 // Load commands
 client.commands = new Discord.Collection();
@@ -15,23 +15,20 @@ for(const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
-
 // Check if ready
 client.on('ready', () => {
     console.log("Online!");
     client.user.setActivity('?help help');
 });
 
-
 // Trigger event
 client.on('message', message => {
     if(!message.content.startsWith(prefix) || message.author.bot) return;
-    
     const args = message.content.slice(prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
-    
     if(!client.commands.has(commandName)) return;
 
+    // Retrieve command
     const command = client.commands.get(commandName);
     if(command.args && !args.length) {
         let reply = "Missing arguments!";
@@ -41,6 +38,7 @@ client.on('message', message => {
         return message.channel.send(reply);
     }
 
+    // Execute
     try {
         command.execute(message, args);
     } catch(e) {
