@@ -17,6 +17,7 @@ for(const file of commandFiles) {
 // Check if ready
 client.on('ready', () => {
     console.log("Online!");
+    client.user.setActivity('god');
 });
 
 // Events

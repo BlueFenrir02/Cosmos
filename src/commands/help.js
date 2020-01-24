@@ -8,7 +8,7 @@ module.exports = {
             client.commands.tap(commandObject => { sendCommandEmbed(commandObject); });
         } else {
             const commandObject = client.commands.get(args[0].toLowerCase());
-            if(commandObject === undefined) return message.reply("command not found!");
+            if(commandObject === undefined) return message.reply("Command not found!");
             sendCommandEmbed(commandObject);
         }
 
