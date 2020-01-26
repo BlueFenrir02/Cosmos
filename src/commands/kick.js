@@ -1,3 +1,4 @@
+// Command
 module.exports = {
 	name: 'kick',
     description: 'Kicks a member!',

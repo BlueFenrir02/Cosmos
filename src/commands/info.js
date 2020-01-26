@@ -1,3 +1,7 @@
+// Libraries
+const Discord = require('discord.js');
+
+// Command
 module.exports = {
 	name: 'info',
     description: 'Get info about a member!',

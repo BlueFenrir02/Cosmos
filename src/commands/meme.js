@@ -1,3 +1,7 @@
+// Libraries
+const request = require('request');
+
+// Command
 module.exports = {
 	name: 'meme',
     description: 'Get a random meme!',

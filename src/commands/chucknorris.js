@@ -1,3 +1,7 @@
+// Libraries
+const request = require('request');
+
+// Command
 module.exports = {
 	name: 'chucknorris',
     description: 'Get a random *Chuck Norris* joke!',

@@ -1,3 +1,4 @@
+// Command
 module.exports = {
 	name: 'purge',
     description: 'Deletes *n* amount of messages!',
@@ -5,6 +6,7 @@ module.exports = {
     usage: '<amount>',
 	execute(message, args) {
         const amount = parseInt(args[0], 10);
+        
         if(amount > 99) {
             return message.reply("Max amount is 99!");
         } else {

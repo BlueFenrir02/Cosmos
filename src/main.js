@@ -1,13 +1,12 @@
-// Setup
-const { prefix, token } = require('./config.json');
-global.Discord = require('discord.js');
-global.request = require('request');
+// Libraries
+const secret = require('./config.json');
+const Discord = require('discord.js');
+const fs = require('fs');
 
 // Create bot
 global.client = new Discord.Client();
 
 // Load commands
-const fs = require('fs');
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for(const file of commandFiles) {
@@ -22,11 +21,9 @@ client.on('ready', () => {
     let object = JSON.parse(fs.readFileSync('./data.json'));
     client.guilds.tap(guild => {
         if(!object.hasOwnProperty(guild.id)) object[guild.id] = {};
-        if(!object[guild.id].hasOwnProperty('credits')) object[guild.id]['credits'] = {};
         guild.members.tap(member => {
-            if(!object[guild.id]['credits'].hasOwnProperty(member.id)) object[guild.id]['credits'][member.id] = { balance: 5000 };
-            if(!object[guild.id].hasOwnProperty('bets')) object[guild.id]['bets'] = {};
-        });    
+            if(!object[guild.id].hasOwnProperty(member.id)) object[guild.id][member.id] = { balance: 5000, bet: {} };
+        });
     });
     fs.writeFileSync('./data.json', JSON.stringify(object));
     
@@ -37,8 +34,8 @@ client.on('ready', () => {
 
 // Trigger event
 client.on('message', message => {
-    if(!message.content.startsWith(prefix) || message.author.bot) return;
-    const args = message.content.slice(prefix.length).split(/ +/);
+    if(!message.content.startsWith(secret.prefix) || message.author.bot) return;
+    const args = message.content.slice(secret.prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
     if(!client.commands.has(commandName)) return;
 
@@ -47,12 +44,12 @@ client.on('message', message => {
     if(command.args && !args.length) {
         let reply = "Missing arguments!";
         if(command.usage) {
-            reply += "\nFormat: `" + prefix + command.name + " " + command.usage + "`";
+            reply += "\nFormat: `" + secret.prefix + command.name + " " + command.usage + "`";
         }
         return message.channel.send(reply);
     }
 
-    // Execute
+    // Execute command
     try {
         command.execute(message, args);
     } catch(e) {
@@ -62,4 +59,4 @@ client.on('message', message => {
 });
 
 // Login
-client.login(token);
+client.login(secret.token);
