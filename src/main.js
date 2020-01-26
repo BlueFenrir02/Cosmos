@@ -2,12 +2,12 @@
 const { prefix, token } = require('./config.json');
 global.Discord = require('discord.js');
 global.request = require('request');
-const fs = require('fs');
 
 // Create bot
 global.client = new Discord.Client();
 
 // Load commands
+const fs = require('fs');
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for(const file of commandFiles) {
@@ -17,8 +17,22 @@ for(const file of commandFiles) {
 
 // Check if ready
 client.on('ready', () => {
-    console.log("Online!");
+    // Create and verify data.json
+    if(!fs.existsSync('./data.json')) fs.writeFileSync('./data.json', JSON.stringify({}));
+    let object = JSON.parse(fs.readFileSync('./data.json'));
+    client.guilds.tap(guild => {
+        if(!object.hasOwnProperty(guild.id)) object[guild.id] = {};
+        if(!object[guild.id].hasOwnProperty('credits')) object[guild.id]['credits'] = {};
+        guild.members.tap(member => {
+            if(!object[guild.id]['credits'].hasOwnProperty(member.id)) object[guild.id]['credits'][member.id] = { balance: 5000 };
+            if(!object[guild.id].hasOwnProperty('bets')) object[guild.id]['bets'] = {};
+        });    
+    });
+    fs.writeFileSync('./data.json', JSON.stringify(object));
+    
+    // Other
     client.user.setActivity('?help help');
+    console.log("Online!");
 });
 
 // Trigger event
