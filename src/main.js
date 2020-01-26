@@ -1,6 +1,7 @@
 // Libraries
 const secret = require('./config.json');
 const Discord = require('discord.js');
+const request = require('then-request');
 const fs = require('fs');
 
 // Create bot
@@ -14,25 +15,45 @@ for(const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
-// Check if ready
-client.on('ready', () => {
-    // Create and verify data.json
+// Functions
+global.addData = (guildID, memberID, propName, propValue, override=true) => { // Add data to data.json
     if(!fs.existsSync('./data.json')) fs.writeFileSync('./data.json', JSON.stringify({}));
     let object = JSON.parse(fs.readFileSync('./data.json'));
+    if(!object.hasOwnProperty(guildID)) object[guildID] = {};
+    if(!object[guildID].hasOwnProperty(memberID)) object[guildID][memberID] = {};
+    if(override) object[guildID][memberID][propName] = propValue;
+    if(!override && !object[guildID][memberID].hasOwnProperty(propName)) object[guildID][memberID][propName] = propValue;
+    fs.writeFileSync('./data.json', JSON.stringify(object));
+}
+
+global.readData = (guildID, memberID, propName) => {
+    try {
+        return JSON.parse(fs.readFileSync('./data.json'))[guildID][memberID][propName];
+    } catch(e) {
+        return message.reply("Error reading data!");
+    }
+}
+
+// Check if ready
+client.on('ready', () => {
+    // Create data.json
     client.guilds.tap(guild => {
-        if(!object.hasOwnProperty(guild.id)) object[guild.id] = {};
         guild.members.tap(member => {
-            if(!object[guild.id].hasOwnProperty(member.id)) object[guild.id][member.id] = { balance: 5000, bet: {} };
+            addData(guild.id, member.id, "balance", 5000, false);
         });
     });
-    fs.writeFileSync('./data.json', JSON.stringify(object));
     
     // Other
     client.user.setActivity('?help help');
     console.log("Online!");
 });
 
-// Trigger event
+// Join event
+client.on('guildMemberAdd', member => {
+    addData(member.guild.id, member.id, "balance", 5000, false);
+});
+
+// Message event
 client.on('message', message => {
     if(!message.content.startsWith(secret.prefix) || message.author.bot) return;
     const args = message.content.slice(secret.prefix.length).split(/ +/);

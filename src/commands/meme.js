@@ -13,12 +13,7 @@ module.exports = {
             json: true
         },
         function(e, r, body) {
-            if(e === null) {
-                return message.channel.send({files: [body.url]});
-            } else {
-                console.log(e);
-                return message.reply("Error!");
-            }
+            return message.channel.send({files: [body.url]});
         });
 	}
 };

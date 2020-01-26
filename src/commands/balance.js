@@ -1,6 +1,3 @@
-// Libraries
-const fs = require('fs');
-
 // Command
 module.exports = {
 	name: 'balance',
@@ -9,7 +6,7 @@ module.exports = {
     usage: '<user>',
 	execute(message, args) {
         const member = message.mentions.members.first();
-        let data = JSON.parse(fs.readFileSync('./data.json'));
-        return message.channel.send(member.user.username + " has " + data[message.guild.id][member.id].balance + " credits!");
+        const amount = readData(message.guild.id, member.id, "balance");
+        return message.channel.send(member.user.username + " has " + amount + " credits!");
 	}
 };
