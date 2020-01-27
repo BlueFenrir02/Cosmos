@@ -2,12 +2,12 @@
 module.exports = {
 	name: 'balance',
     description: 'Get someones credit balance!',
-    args: true,
-    usage: '<user>',
+    args: false,
+    usage: '<user> or <empty>',
 	execute(message, args) {
-        const member = message.mentions.members.first();
+        const member = (args.length ? message.mentions.members.first().user : message.author);
         const amount = readData(message.guild.id, member.id, "balance");
         
-        return message.channel.send("<@" + member.user.id + "> has " + amount + " credits!");
+        return message.channel.send("<@" + member.id + "> has " + amount + " credits!");
 	}
 };
