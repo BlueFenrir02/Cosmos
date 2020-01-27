@@ -6,21 +6,25 @@ module.exports = {
 	name: 'help',
     description: 'Get info about a specific command or get a list of all available commands!',
     args: false,
-    usage: '*command* or *nothing*',
+    usage: '<command> or <nothing>',
 	execute(message, args) {
-        if(args.length == 0) {
-            let commandList = "**All commands:** \n";
-            client.commands.tap(e => commandList += "*" + e.name + "*\n");
-            return message.channel.send(commandList);
+        // Variables
+        let embed = new Discord.RichEmbed();
+        // Execute
+        embed.setColor("#ff0000");
+        if(!args.length) {
+            embed.setTitle("Command list");
+            client.commands.tap(e => embed.addField(e.name, e.description));
         } else {
+            // Variables
             const commandObject = client.commands.get(args[0].toLowerCase());
-            if(commandObject === undefined) return message.reply("Command not found!");
-            const embed = new Discord.RichEmbed()
-                .setColor('#FFA500')
-                .setTitle(commandObject.name)
-                .addField('Description', commandObject.description)
-                .addField('Format', message.content[0] + commandObject.name + " " + commandObject.usage);
-            return message.channel.send(embed);
+            // Errors
+            if(commandObject === undefined) return message.channel.send("\:no_entry_sign: Command was not found, <@" + message.author.id + ">!");
+            // Execute
+            embed.setTitle(commandObject.name);
+            embed.addField('Description', commandObject.description);
+            embed.addField('Format', message.content[0] + commandObject.name + " " + commandObject.usage);   
         }
+        return message.channel.send(embed);
 	}
 };

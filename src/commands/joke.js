@@ -7,22 +7,21 @@ module.exports = {
     description: 'Get a random dark joke!',
     args: false,
     usage: '',
-	execute(message, args) {
+	execute(message) {
+        // Execute
         request({
             url: 'https://sv443.net/jokeapi/category/dark',
             json: true
         },
         function(e, r, body) {
-            if(e === null) {
-                if(body.type === 'single') {
-                    return message.channel.send("> *" + body.joke + "*");
-                } else {
-                    return message.channel.send("> " + body.setup + "\n> *- " + body.delivery + "*");
-                }
-            } else {
-                console.log(e);
-                return message.reply("Error!");
+            // Errors
+            if(e) {
+                console.error("ERROR: Meme command!\n\n" + e);
+                return message.channel.send("\:satellite: Wasn't able to fetch joke, <@" + message.author.id + ">!");
             }
+            // Execute 
+            if(body.type === 'single') return message.channel.send("> *" + body.joke + "*");
+            else return message.channel.send("> " + body.setup + "\n> *- " + body.delivery + "*");
         });
 	}
 };

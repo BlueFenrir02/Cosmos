@@ -7,17 +7,19 @@ module.exports = {
     description: 'Get a random *Chuck Norris* joke!',
     args: false,
     usage: '',
-	execute(message, args) {
+	execute(message) {
 		request({
             url: 'http://api.icndb.com/jokes/random',
             json: true
         },
         function(e, r, body) {
-            if(e === null) {
-                return message.channel.send("> *" + body.value.joke.replace("&quot;", "\"").replace("&quot;", "\"") + "*");
-            } else {
-                return message.reply("Unknown error!");
+            // Errors
+            if(e) {
+                console.error("ERROR: Chucknorris command!\n\n" + e);
+                return message.channel.send("\:satellite: Wasn't able to fetch joke, <@" + message.author.id + ">!");
             }
+            // Execute
+            return message.channel.send("> *" + body.value.joke.replace("&quot;", "\"").replace("&quot;", "\"") + "*");
         });
 	}
 };

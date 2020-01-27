@@ -4,7 +4,8 @@ module.exports = {
     description: 'Replies with "Hello!"',
     args: false,
     usage: '',
-	execute(message, args) {
+	execute(message) {
+		// Execute
 		message.channel.send('Hello!');
 	}
 }; 
