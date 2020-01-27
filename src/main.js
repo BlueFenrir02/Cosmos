@@ -39,7 +39,6 @@ client.on('ready', () => {
     client.guilds.tap(guild => {
         guild.members.tap(member => {
             addData(guild.id, member.id, "balance", 5000, false);
-            addData(guild.id, member.id, "deathroll", [], false);
         });
     });
     
