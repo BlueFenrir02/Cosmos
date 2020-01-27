@@ -9,10 +9,10 @@ module.exports = {
         // Variables
         const amount = parseFloat(args[0]);
         const dice = Math.floor(Math.random() * 6)+1;
-        const won = Math.floor(Math.random() * 10);
+        const won = Math.floor(Math.random() * 2);
         const balance = readData(message.guild.id, message.author.id, "balance");
         // Execute
-        if(won === 6){
+        if(won === 1){
             addData(message.guild.id, message.author.id, "balance", balance - dice * amount);
             return message.reply("You lost " + dice * amount + " credits!" + " You rolled " + dice);
         }
