@@ -7,6 +7,7 @@ module.exports = {
 	execute(message, args) {
         const member = message.mentions.members.first();
         const amount = readData(message.guild.id, member.id, "balance");
-        return message.channel.send(member.user.username + " has " + amount + " credits!");
+        
+        return message.channel.send("<@" + member.user.id + "> has " + amount + " credits!");
 	}
 };

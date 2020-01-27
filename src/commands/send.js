@@ -10,7 +10,7 @@ module.exports = {
         if(amount >= 0) {
             addData(message.guild.id, member.id, "balance", parseFloat(readData(message.guild.id, member.id, "balance")) + amount);
             addData(message.guild.id, message.author.id, "balance", parseFloat(readData(message.guild.id, message.author.id, "balance")) - amount);
-            return message.channel.send("@" + message.author.tag + " sent @" + member.user.tag + " " + amount + " credits!");
+            return message.channel.send("<@" + message.author.id + "> sent <@" + member.user.id + "> " + amount + " credits!");
         } else {
             return message.reply("Balance is too low!");
         }

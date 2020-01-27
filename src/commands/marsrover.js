@@ -9,7 +9,8 @@ module.exports = {
     usage: '',
 	execute(message, args) {
         const rovers = ['curiosity', 'spirit', 'opportunity'];
-		request({
+        
+        request({
             url: 'https://mars-photos.herokuapp.com/api/v1/rovers/' + rovers[Math.floor(Math.random() * 3)] + '/latest_photos',
             json: true
         },

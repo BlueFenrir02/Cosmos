@@ -6,12 +6,13 @@ module.exports = {
     usage: '<user> <reason>',
 	execute(message, args) {
         const member = message.mentions.members.first();
+        
         if(member.kickable && message.member.hasPermission('ADMINISTRATOR')) {
             const reason = args.slice(1).join(' ');
             member.kick(reason);
-            return message.reply("Kicked " + member.user.tag + " for " + reason);
+            return message.reply("Kicked <@" + member.user.id + "> for " + reason);
         } else {
-            return message.reply("Can't kick " + member.user.tag);
+            return message.reply("Can't kick <@" + member.user.id + ">");
         }
 	}
 };
