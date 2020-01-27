@@ -72,7 +72,7 @@ client.on('message', message => {
         }
         return message.channel.send(reply);
     }
-
+    
     // Execute command
     try {
         command.execute(message, args);

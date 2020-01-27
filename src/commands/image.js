@@ -4,9 +4,9 @@ const request = require('request');
 // Command
 module.exports = {
 	name: 'image',
-    description: 'Search for a image!',
+    description: 'Search for the image and get the result!',
     args: true,
-    usage: '<search>',
+    usage: '*search*',
 	execute(message, args) {
         request({ // ~ 5000 images per hour
             url: 'https://pixabay.com/api/?key=15021305-24a039485a0548601948251b0&q=' + args.join('+') + '&image_type=photo',

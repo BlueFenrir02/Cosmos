@@ -1,9 +1,9 @@
 // Command
 module.exports = {
 	name: 'coinflip',
-    description: 'Coinflip bet!',
-    args: false,
-    usage: '<amount>',
+    description: 'Make a coinflip bet with your credits!',
+    args: true,
+    usage: '*amount*',
 	execute(message, args) {
         const amount = parseFloat(args[0]);
         const won = Math.floor(Math.random() * 2);

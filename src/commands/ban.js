@@ -1,9 +1,9 @@
 // Command
 module.exports = {
 	name: 'ban',
-    description: 'Bans a member!',
+    description: 'Ban a user!',
     args: true,
-    usage: '<user> <reason>',
+    usage: '*user* *reason*',
 	execute(message, args) {
         const member = message.mentions.members.first();
         

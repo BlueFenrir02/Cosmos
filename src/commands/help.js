@@ -4,9 +4,9 @@ const Discord = require('discord.js');
 // Command
 module.exports = {
 	name: 'help',
-    description: 'Shows a list of commands if no arguments are given, or helps you with a specific command!',
+    description: 'Get info about a specific command or get a list of all available commands!',
     args: false,
-    usage: '<commandName> or <empty>',
+    usage: '*command* or *nothing*',
 	execute(message, args) {
         if(args.length == 0) {
             let commandList = "**All commands:** \n";

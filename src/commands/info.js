@@ -4,9 +4,9 @@ const Discord = require('discord.js');
 // Command
 module.exports = {
 	name: 'info',
-    description: 'Get info about a member!',
+    description: 'Get info about a user!',
     args: true,
-    usage: '<user>',
+    usage: '*user*',
 	execute(message, args) {
         const member = message.mentions.members.first();
         const status = (member.user.presence.game === null) ? member.user.presence.status : "playing " + member.user.presence.game.name;

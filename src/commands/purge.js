@@ -1,9 +1,9 @@
 // Command
 module.exports = {
 	name: 'purge',
-    description: 'Deletes *n* amount of messages!',
+    description: 'Delete *x* amount of messages!',
     args: true,
-    usage: '<amount>',
+    usage: '*amount*',
 	execute(message, args) {
         const amount = parseInt(args[0], 10);
         

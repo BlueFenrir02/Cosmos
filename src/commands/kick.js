@@ -1,9 +1,9 @@
 // Command
 module.exports = {
 	name: 'kick',
-    description: 'Kicks a member!',
+    description: 'Kick a user!',
     args: true,
-    usage: '<user> <reason>',
+    usage: '*user* *reason*',
 	execute(message, args) {
         const member = message.mentions.members.first();
         

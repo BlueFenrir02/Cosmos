@@ -4,7 +4,7 @@ const request = require('request');
 // Command
 module.exports = {
 	name: 'joke',
-    description: 'Get a random joke!',
+    description: 'Get a random dark joke!',
     args: false,
     usage: '',
 	execute(message, args) {
