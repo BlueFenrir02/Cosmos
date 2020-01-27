@@ -1,7 +1,6 @@
 // Libraries
 const secret = require('./config.json');
 const Discord = require('discord.js');
-const request = require('then-request');
 const fs = require('fs');
 
 // Create bot
@@ -40,6 +39,7 @@ client.on('ready', () => {
     client.guilds.tap(guild => {
         guild.members.tap(member => {
             addData(guild.id, member.id, "balance", 5000, false);
+            addData(guild.id, member.id, "deathroll", [], false);
         });
     });
     
@@ -55,6 +55,10 @@ client.on('guildMemberAdd', member => {
 
 // Message event
 client.on('message', message => {
+    // Add balance
+    addData(message.guild.id, message.author.id, "balance", parseFloat(readData(message.guild.id, message.author.id, "balance") + 1));
+
+    // Split
     if(!message.content.startsWith(secret.prefix) || message.author.bot) return;
     const args = message.content.slice(secret.prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
